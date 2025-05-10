@@ -1,0 +1,155 @@
+   /* Add these styles to your style.css file */
+
+/* General styling */
+.hidden {
+    display: none;
+}
+
+.form-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Gantt Chart Styling */
+#ganttChart {
+    overflow-x: auto;
+    margin-bottom: 10px;
+    padding: 10px 0;
+}
+
+.gantt-container {
+    display: flex;
+    flex-direction: row;
+    min-height: 50px;
+    position: relative;
+}
+
+.gantt-block {
+    height: 50px;
+    min-width: 30px;
+    border: 1px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    margin: 0 1px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.idle-block {
+    color: #666;
+    background-color: #f1f1f1 !important;
+    border: 1px dashed #ccc;
+}
+
+.time-label {
+    position: absolute;
+    bottom: -20px;
+    left: -5px;
+    font-size: 12px;
+    color: #333;
+    background: #f9f9f9;
+    padding: 2px 4px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.end-label {
+    left: auto;
+    right: -5px;
+}
+
+.process-id {
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
+
+/* Table Styling */
+.process-table, .results-table {
+    margin-top: 15px;
+}
+
+.priority-column {
+    display: none;
+}
+
+/* Results Section */
+#resultsSection {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.metrics-table th {
+    width: 50%;
+}
+   
+   .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-top: 20px;
+        }
+        .selected-algorithm {
+            font-size: 1.2rem;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            margin-bottom: 20px;
+        }
+        .process-table th {
+            background-color: #f8f9fa;
+            position: sticky;
+            top: 0;
+        }
+        .priority-column {
+            display: none;
+        }
+        .delete-btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+        .gantt-chart {
+            display: flex;
+            margin: 20px 0;
+            height: 60px;
+            align-items: center;
+            background-color: #f8f9fa;
+            overflow-x: auto;
+        }
+        .gantt-block {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            min-width: 50px;
+            border-radius: 4px;
+            margin-right: 2px;
+        }
+        .gantt-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        .results-table {
+            margin-top: 20px;
+        }
+        .metrics-table {
+            margin-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .hidden {
+            display: none;
+        }
+    

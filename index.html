@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling Simulator</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="text-center mb-4">
+                    <h1>CPU Scheduling Simulator</h1>
+                    <p class="lead text-muted">Configure and simulate CPU scheduling algorithms</p>
+                </div>
+
+                <div class="form-container">
+                    <!-- Algorithm Selection -->
+                    <div class="mb-4">
+                        <h3>Scheduling Algorithm</h3>
+                        <div class="dropdown mt-3">
+                            <button class="btn btn-primary dropdown-toggle px-4 w-100" type="button" id="algorithmDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Choose Algorithm
+                            </button>
+                            <ul class="dropdown-menu w-100" aria-labelledby="algorithmDropdown">
+                                <li><h6 class="dropdown-header">CPU Scheduling Algorithms</h6></li>
+                                <li><a class="dropdown-item" href="#" data-algo="FCFS">
+                                    FCFS (First Come First Serve)
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" data-algo="SJF">
+                                    SJF (Shortest Job First)
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" data-algo="SRTF">
+                                    SRTF (Shortest Remaining Time First)
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" data-algo="Round Robin" data-needs-quantum="true">
+                                    Round Robin
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" data-algo="Priority" data-needs-priority="true">
+                                    Priority Scheduling
+                                </a></li>
+                            </ul>
+                        </div>
+                        
+                        <div id="selectedAlgorithmDisplay" class="selected-algorithm mt-3" style="display: none;">
+                            <strong>Selected Algorithm:</strong>
+                            <span id="selectedAlgorithmName"></span>
+                        </div>
+                    </div>
+
+                    <!-- Process Table -->
+                    <div class="mb-4">
+                        <h3>Processes</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered process-table">
+                                <thead>
+                                    <tr>
+                                        <th>Process</th>
+                                        <th>Arrival Time</th>
+                                        <th>Burst Time</th>
+                                        <th class="priority-column">Priority</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="processTableBody">
+                                    <tr>
+                                        <td>P1</td>
+                                        <td><input type="number" class="form-control arrival-time" min="0" value="0"></td>
+                                        <td><input type="number" class="form-control burst-time" min="1" value="1"></td>
+                                        <td class="text-center"><button class="btn btn-danger btn-sm delete-btn">Delete</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button id="addProcessBtn" class="btn btn-success mt-2">
+                            Add Process
+                        </button>
+                    </div>
+
+                    <!-- Time Inputs -->
+                    <div class="time-inputs">
+                        <h3>Parameters</h3>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="contextSwitchTime" class="form-label">Context Switch Time (ms)</label>
+                                <input type="number" class="form-control" id="contextSwitchTime" min="0" value="0">
+                            </div>
+                            <div class="col-md-6 mb-3 quantum-input hidden" id="quantumInputGroup">
+                                <label for="timeQuantum" class="form-label">Time Quantum (ms)</label>
+                                <input type="number" class="form-control" id="timeQuantum" min="1" value="4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid mt-4">
+                        <button id="runSimulationBtn" class="btn btn-primary btn-lg">
+                            Run Simulation
+                        </button>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div id="resultsSection" class="hidden mt-5">
+                        <h3>Simulation Results</h3>
+                        
+                        <!-- Gantt Chart -->
+                        <div class="mb-4">
+                            <h4>Gantt Chart</h4>
+                            <div id="ganttChart" class="gantt-chart"></div>
+                            <div id="ganttTime" class="gantt-time"></div>
+                        </div>
+                        
+                        <!-- Results Table -->
+                        <div class="mb-4">
+                            <h4>Process Metrics</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered results-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Process</th>
+                                            <th>Arrival Time</th>
+                                            <th>Burst Time</th>
+                                            <th class="priority-column">Priority</th>
+                                            <th>Completion Time</th>
+                                            <th>Turnaround Time</th>
+                                            <th>Waiting Time</th>
+                                            <th>Response Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="resultsTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Performance Metrics -->
+                        <div class="mb-4">
+                            <h4>Performance Metrics</h4>
+                            <table class="table table-bordered metrics-table">
+                                <tbody>
+                                    <tr>
+                                        <th>Average Turnaround Time</th>
+                                        <td id="avgTurnaround">0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Average Waiting Time</th>
+                                        <td id="avgWaiting">0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Average Response Time</th>
+                                        <td id="avgResponse">0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Throughput</th>
+                                        <td id="throughput">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+   <script src="./script.js"></script>
+</body>
+</html>
